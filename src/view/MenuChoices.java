@@ -1,0 +1,119 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package view;
+
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
+
+/**
+ *
+ * @author hp
+ */
+public final class MenuChoices extends Application implements EventHandler<ActionEvent> {
+
+    Stage s1;
+
+    public static void main(String[] args) {
+        Application.launch(args);
+    }
+
+    public MenuChoices() throws Exception {
+        init();
+    }
+
+    @Override
+    public void init() throws Exception {
+        initComponents();
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        GridPane root = new GridPane();
+        root.setVgap(10);
+        root.setHgap(10);
+        root.setStyle("-fx-padding:100;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;"
+                + "-fx-border-insets: 5;" + "-fx-border-color: blue;");
+        //Buttons
+
+        root.addRow(0, creerRedevableBtn, creerLocaleBtn, creerAutresBtn, saveTaxeBtn, searchByCretiriaBtn);
+
+        //implementation
+        creerRedevableBtn.setOnAction(e -> {
+            s1.close();
+            try {
+                CreerRedevable s2 = new CreerRedevable();
+                s2.start(new Stage());
+            } catch (Exception ex) {
+            }
+        });
+
+        creerLocaleBtn.setOnAction(e -> {
+            s1.close();
+            try {
+                CreerLocale s2 = new CreerLocale();
+                s2.start(new Stage());
+            } catch (Exception ex) {
+            }
+        });
+
+        creerAutresBtn.setOnAction(e -> {
+            s1.close();
+            try {
+                CreationParties s2 = new CreationParties();
+                s2.start(new Stage());
+            } catch (Exception ex) {
+            }
+        });
+
+        saveTaxeBtn.setOnAction(e -> {
+            s1.close();
+            try {
+                SaveTaxe s2 = new SaveTaxe();
+                s2.start(new Stage());
+            } catch (Exception ex) {
+            }
+        });
+
+        searchByCretiriaBtn.setOnAction(e -> {
+            s1.close();
+            try {
+                SearchByCriteria s2 = new SearchByCriteria();
+                s2.start(new Stage());
+            } catch (Exception ex) {
+            }
+        });
+
+        primaryStage.setScene(new Scene(root));
+        primaryStage.setTitle("Choix");
+        primaryStage.show();
+
+        s1 = primaryStage;
+    }
+
+    Button creerRedevableBtn;
+    Button creerLocaleBtn;
+    Button creerAutresBtn;
+    Button saveTaxeBtn;
+    Button searchByCretiriaBtn;
+
+    private void initComponents() {
+        creerRedevableBtn = new Button("Creer redevable");
+        creerLocaleBtn = new Button("Creer locale");
+        creerAutresBtn = new Button("Creer autres");
+        saveTaxeBtn = new Button("Payer taxe");
+        searchByCretiriaBtn = new Button("Recherches par critère");
+    }
+
+    @Override
+    public void handle(ActionEvent event) {
+    }
+
+}
