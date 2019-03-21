@@ -176,7 +176,7 @@ public final class SearchByCriteria extends Application implements EventHandler<
             Integer anneeMin = null;
             Integer anneMax = null;
             Categorie cat = null;
-            int i = categorieBox.getSelectionModel().getSelectedIndex();
+            int i = categorieBox.getSelectionModel().getSelectedIndex()-1;
             if (i >= 0) {
                 cat = categories.get(i);
             }
@@ -201,9 +201,9 @@ public final class SearchByCriteria extends Application implements EventHandler<
             Secteur sec = null;
             Quartier quar = null;
             String codeLoc = null;
-            int i = categorieBox1.getSelectionModel().getSelectedIndex();
-            int j = secteurBox.getSelectionModel().getSelectedIndex();
-            int k = quartierBox.getSelectionModel().getSelectedIndex();
+            int i = categorieBox1.getSelectionModel().getSelectedIndex()-1;
+            int j = secteurBox.getSelectionModel().getSelectedIndex()-1;
+            int k = quartierBox.getSelectionModel().getSelectedIndex()-1;
             if (codeLocaleField1.getText() != null && !codeLocaleField1.getText().equals("")) {
                 codeLoc = codeLocaleField1.getText();
             }
@@ -290,6 +290,7 @@ public final class SearchByCriteria extends Application implements EventHandler<
 
     private void initjComboBoxCategorie() {
         categories = cs.findAll();
+        categorieBox.getItems().add("-------SELECT-------");
         categories.forEach((categorie) -> {
             categorieBox.getItems().add(categorie.getLabel());
         });
@@ -297,6 +298,7 @@ public final class SearchByCriteria extends Application implements EventHandler<
 
     private void initjComboBoxCategorie1() {
         categories = cs.findAll();
+        categorieBox1.getItems().add("-------SELECT-------");
         categories.forEach((categorie) -> {
             categorieBox1.getItems().add(categorie.getLabel());
         });
@@ -304,6 +306,7 @@ public final class SearchByCriteria extends Application implements EventHandler<
 
     private void initjComboBoxSecteur() {
         secteurs = ss.findAll();
+        secteurBox.getItems().add("-------SELECT-------");
         secteurs.forEach((secteur) -> {
             secteurBox.getItems().add(secteur.getNom());
         });
@@ -313,6 +316,7 @@ public final class SearchByCriteria extends Application implements EventHandler<
 
     private void initComboBoxQuartier() {
         quartierBox.getItems().clear();
+        quartierBox.getItems().add("-------SELECT-------");
         int i = secteurBox.getSelectionModel().getSelectedIndex();
         if (i >= 0) {
             quartiers = qs.findQuartierBySecteur(secteurs.get(i));

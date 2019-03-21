@@ -90,7 +90,29 @@ public final class CreerLocale extends Application implements EventHandler<Actio
         findBtn.setCursor(Cursor.HAND);
         nextBtn.setCursor(Cursor.HAND);
         prevBtn.setCursor(Cursor.HAND);
-
+        
+        //Alt commandes
+        codeLocalelabel.setLabelFor(codeLocaleField);
+        codeLocalelabel.setMnemonicParsing(true);
+        
+        redevablelabel.setLabelFor(redevableField);
+        redevablelabel.setMnemonicParsing(true);
+        
+        dernierTrimlabel.setLabelFor(dernierTrimField);
+        dernierTrimlabel.setMnemonicParsing(true);
+        
+        dernierAnneelabel.setLabelFor(dernierAnneeField);
+        dernierAnneelabel.setMnemonicParsing(true);
+        
+        categorielabel.setLabelFor(categorieComboBox);
+        categorielabel.setMnemonicParsing(true);
+        
+        secteurlabel.setLabelFor(secteurComboBox);
+        secteurlabel.setMnemonicParsing(true);
+        
+        quartierlabel.setLabelFor(quartierComboBox);
+        quartierlabel.setMnemonicParsing(true);
+        
         //impement save button
         findBtn.setOnAction(event -> {
             Locale l = ls.findByCode(codeLocaleField.getText());
@@ -98,7 +120,7 @@ public final class CreerLocale extends Application implements EventHandler<Actio
             if (l == null || codeLocaleField.getText().equals("")) {
                 alertUtil.showAlert(Alert.AlertType.ERROR, "ERROR", "Locale ayant comme code '" + codeLocaleField.getText() + "' n'existe pas");
             } else {
-                //codeLocaleField.setText(l.getCode());
+                codeLocaleField.setText(l.getCode());
                 //System.out.println(l.getRedevable().getCin());
                 redevableField.setText(l.getRedevable().getCin());
                 dernierTrimField.setText(l.getDernierTrime() + "");
@@ -115,7 +137,7 @@ public final class CreerLocale extends Application implements EventHandler<Actio
             if (l == null || codeLocaleField.getText().equals("")) {
                 alertUtil.showAlert(Alert.AlertType.ERROR, "ERROR", "Locale ayant comme code '" + codeLocaleField.getText() + "' n'existe pas");
             } else {
-                Alert dialogC = new Alert(Alert.AlertType.CONFIRMATION, "Confirmation");
+                Alert dialogC = new Alert(Alert.AlertType.WARNING);
                 dialogC.setHeaderText("Voulez- vous vraiment supprimer ce locale");
                 Optional<ButtonType> reponse = dialogC.showAndWait();
                 if (reponse.get() == ButtonType.OK) {
@@ -143,25 +165,25 @@ public final class CreerLocale extends Application implements EventHandler<Actio
                 l.setQuartier(quartier);
                 l.setCategorie(cat);
                 ls.edit(l);
+                alertUtil.showAlert(Alert.AlertType.INFORMATION, "INFO", "Locale ayant comme code " + codeLocaleField.getText() + " modifié avec succées");
                 refreshLocaleTextFields();
-                alertUtil.showAlert(Alert.AlertType.INFORMATION, "INFO", "Locale ayant comme cin " + codeLocaleField.getText() + "modifier avec succées");
             }
         });
 
         saveBtn.setOnAction(e -> {
             Locale locale = ls.find(codeLocaleField.getText());
             Redevable r = rs.find(redevableField.getText());
-
-            if (codeLocaleField.getText().equals("") || redevableField.getText().equals("") || dernierTrimField.getText().equals("")) {
-                alertUtil.showAlert(Alert.AlertType.ERROR, "ERROR", "Merci de remplir toutes les champs");
-            } else if (locale != null) {
+            if (locale != null) {
                 alertUtil.showAlert(Alert.AlertType.ERROR, "ERROR", "Locale existe déja");
             } else if (r == null) {
                 alertUtil.showAlert(Alert.AlertType.ERROR, "ERROR", "Redevable n'éxiste pas");
+            } else if (codeLocaleField.getText().equals("") || redevableField.getText().equals("") || dernierTrimField.getText().equals("")) {
+                alertUtil.showAlert(Alert.AlertType.ERROR, "ERROR", "Merci de remplir toutes les champs");
             } else if (categorieComboBox.getSelectionModel().getSelectedIndex() < 0 || secteurComboBox.getSelectionModel().getSelectedIndex() < 0 || categorieComboBox.getSelectionModel().getSelectedIndex() < 0) {
                 alertUtil.showAlert(Alert.AlertType.ERROR, "ERROR", "Merci de marquer tous les choix");
             } else {
-                ls.createLocale(codeLocaleField.getText(), new Integer(dernierTrimField.getText()), new Integer(dernierAnneeField.getText()), quartiers.get(secteurComboBox.getSelectionModel().getSelectedIndex() - 1), r, categories.get(categorieComboBox.getSelectionModel().getSelectedIndex()));
+                Locale l=new Locale(codeLocaleField.getText(), new Integer(dernierTrimField.getText()), new Integer(dernierAnneeField.getText()), quartiers.get(secteurComboBox.getSelectionModel().getSelectedIndex()), r, categories.get(categorieComboBox.getSelectionModel().getSelectedIndex()));
+                ls.create(l);
                 alertUtil.showAlert(Alert.AlertType.INFORMATION, "INFO", "Locale crée avec succés");
             }
         });
@@ -247,13 +269,13 @@ public final class CreerLocale extends Application implements EventHandler<Actio
 
     private void initComponents() {
         //Labels
-        codeLocalelabel = new Label("Code Locale:");
-        redevablelabel = new Label("Redevable:");
-        dernierTrimlabel = new Label("Dernier trim:");
-        dernierAnneelabel = new Label("Dernier annee:");
-        categorielabel = new Label("Categorie:");
-        secteurlabel = new Label("Secteur:");
-        quartierlabel = new Label("Quartier:");
+        codeLocalelabel = new Label("_Code Locale:");
+        redevablelabel = new Label("_Redevable:");
+        dernierTrimlabel = new Label("_Dernier trim:");
+        dernierAnneelabel = new Label("_Dernier annee:");
+        categorielabel = new Label("_Categorie:");
+        secteurlabel = new Label("_Secteur:");
+        quartierlabel = new Label("_Quartier:");
         // textfields
         codeLocaleField = new TextField();
         redevableField = new TextField();

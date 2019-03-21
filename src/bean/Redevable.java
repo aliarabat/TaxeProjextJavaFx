@@ -7,10 +7,11 @@ package bean;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 
 /**
@@ -29,8 +30,8 @@ public class Redevable implements Serializable {
     private String email;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date naissance;
-    @OneToOne(mappedBy = "redevable", cascade=CascadeType.ALL)
-    private Locale locale;
+    @OneToMany(mappedBy = "redevable", cascade = CascadeType.REMOVE)
+    private List<Locale> locale;
 
     public Redevable() {
     }
@@ -44,7 +45,6 @@ public class Redevable implements Serializable {
         this.naissance = naissance;
     }
 
-    
     public String getCin() {
         return cin;
     }
@@ -93,11 +93,11 @@ public class Redevable implements Serializable {
         this.naissance = naissance;
     }
 
-    public Locale getLocale() {
+    public List<Locale> getLocale() {
         return locale;
     }
 
-    public void setLocale(Locale locale) {
+    public void setLocale(List<Locale> locale) {
         this.locale = locale;
     }
 
@@ -120,5 +120,5 @@ public class Redevable implements Serializable {
         }
         return true;
     }
-    
+
 }

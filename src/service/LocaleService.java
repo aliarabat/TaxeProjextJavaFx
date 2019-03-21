@@ -8,7 +8,6 @@ package service;
 import bean.Categorie;
 import bean.Locale;
 import bean.Quartier;
-import bean.Redevable;
 import bean.Secteur;
 import java.util.List;
 
@@ -20,12 +19,6 @@ public class LocaleService extends AbstractFacade<Locale> {
 
     public LocaleService() {
         super(Locale.class);
-    }
-
-    public Locale createLocale(String code, int dernierTrime, int dernierAnne, Quartier quartier, Redevable redevable, Categorie categorie) {
-        Locale l = new Locale(code, dernierTrime, dernierAnne, quartier, redevable, categorie);
-        create(l);
-        return l;
     }
 
     public Locale findByCode(String code) {

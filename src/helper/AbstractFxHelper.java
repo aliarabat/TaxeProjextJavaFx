@@ -21,7 +21,7 @@ import util.DaoEngigne;
  * @author AIMAD
  * @param <T>
  */
-public abstract class AbstractFxHelper<T> extends AbstractTableModel {
+public abstract class AbstractFxHelper<T> {
 
     protected AbstractFxHelperItem[] abstractFxHelperItem;
     protected List<T> list = new ArrayList<T>();
@@ -82,22 +82,5 @@ public abstract class AbstractFxHelper<T> extends AbstractTableModel {
     public void setList(List<T> list) {
         data = FXCollections.observableArrayList(list);
         table.setItems(data);
-    }
-
-    @Override
-    public Object getValueAt(int rowIndex, int columnIndex) {
-        if (list != null && rowIndex < list.size()) {
-            for (int i = 0; i < abstractFxHelperItem.length; i++) {
-                if (columnIndex == i) {
-                    System.out.println("ana daba f i ==> " + i);
-                    try {
-                        return DaoEngigne.lunchGetterByParamName(list.get(rowIndex), abstractFxHelperItem[i].getAttributeName());
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-                }
-            }
-        }
-        return null;
     }
 }

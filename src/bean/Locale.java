@@ -12,7 +12,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 /**
  *
@@ -28,11 +27,11 @@ public class Locale implements Serializable {
     private int dernierAnne;
     @ManyToOne
     private Quartier quartier;
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.REMOVE)
     private Redevable redevable;
     @ManyToOne
     private Categorie categorie;
-    @OneToMany(mappedBy = "locale", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "locale", cascade = CascadeType.REMOVE)
     private List<Taxe> taxes;
 
     public Locale() {
@@ -93,6 +92,14 @@ public class Locale implements Serializable {
 
     public void setCategorie(Categorie categorie) {
         this.categorie = categorie;
+    }
+
+    public List<Taxe> getTaxes() {
+        return taxes;
+    }
+
+    public void setTaxes(List<Taxe> taxes) {
+        this.taxes = taxes;
     }
 
     @Override

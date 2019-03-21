@@ -54,12 +54,12 @@ public final class CreerRedevable extends Application implements EventHandler<Ac
     }
 
     private void initComponents() {
-        cinLabel = new Label("Cin");
-        prenomLabel = new Label("Prenom");
-        nomLabel = new Label("Nom");
-        telLabel = new Label("Tel");
-        emailLabel = new Label("Email");
-        naissanceLabel = new Label("Naissance");
+        cinLabel = new Label("_Cin");
+        prenomLabel = new Label("_Prenom");
+        nomLabel = new Label("_Nom");
+        telLabel = new Label("_Tel");
+        emailLabel = new Label("_Email");
+        naissanceLabel = new Label("_Naissance");
         //fields
         cinField = new TextField();
         prenomField = new TextField();
@@ -109,6 +109,26 @@ public final class CreerRedevable extends Application implements EventHandler<Ac
         findBtn.setCursor(Cursor.HAND);
         nextBtn.setCursor(Cursor.HAND);
         prevtBtn.setCursor(Cursor.HAND);
+        //naissance picker
+        naissancePicker.setPrefWidth(245);
+        //Alt commandes
+        cinLabel.setLabelFor(cinField);
+        cinLabel.setMnemonicParsing(true);
+        
+        prenomLabel.setLabelFor(prenomField);
+        prenomLabel.setMnemonicParsing(true);
+        
+        nomLabel.setLabelFor(nomField);
+        nomLabel.setMnemonicParsing(true);
+        
+        telLabel.setLabelFor(telField);
+        telLabel.setMnemonicParsing(true);
+        
+        emailLabel.setLabelFor(emailField);
+        emailLabel.setMnemonicParsing(true);
+        
+        naissanceLabel.setLabelFor(naissancePicker);
+        naissanceLabel.setMnemonicParsing(true);
 
         //Action on buttons
         findBtn.setPrefWidth(50);
@@ -132,7 +152,7 @@ public final class CreerRedevable extends Application implements EventHandler<Ac
             if (r == null) {
                 alertUtil.showAlert(AlertType.ERROR, "ERROR", "Redevable ayant comme cin '" + cinField.getText() + "' n'existe pas");
             } else {
-                Alert dialogC = new Alert(Alert.AlertType.CONFIRMATION, "Confirmation");
+                Alert dialogC = new Alert(Alert.AlertType.WARNING);
                 dialogC.setHeaderText("Voulez- vous vraiment supprimer ce redevable");
                 Optional<ButtonType> reponse = dialogC.showAndWait();
                 if (reponse.get() == ButtonType.OK) {
@@ -157,7 +177,7 @@ public final class CreerRedevable extends Application implements EventHandler<Ac
                 redevable.setNom(nomField.getText());
                 redevable.setPrenom(prenomField.getText());
                 rs.edit(redevable);
-                alertUtil.showAlert(AlertType.INFORMATION, "Infos", "Redevable ayant comme cin " + cinField.getText() + "modifier avec succées");
+                alertUtil.showAlert(AlertType.INFORMATION, "Infos", "Redevable ayant comme cin " + cinField.getText() + " modifié avec succées");
             }
         });
 

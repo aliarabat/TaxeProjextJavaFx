@@ -25,14 +25,4 @@ public class TaxeFxHelper2 extends AbstractFxHelper<Taxe> {
     public TaxeFxHelper2(TableView<Taxe> table) {
         super(titres, table);
     }
-   
-    @Override
-    public int getRowCount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public int getColumnCount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

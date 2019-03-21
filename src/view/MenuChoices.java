@@ -5,13 +5,17 @@
  */
 package view;
 
+import bean.User;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import util.Session;
 
 /**
  *
@@ -32,6 +36,7 @@ public final class MenuChoices extends Application implements EventHandler<Actio
     @Override
     public void init() throws Exception {
         initComponents();
+        userLabel.setText("Bienvenue " + ((User) Session.getAttribut("connectedUser")).getId());
     }
 
     @Override
@@ -41,10 +46,12 @@ public final class MenuChoices extends Application implements EventHandler<Actio
         root.setHgap(10);
         root.setStyle("-fx-padding:100;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;"
                 + "-fx-border-insets: 5;" + "-fx-border-color: blue;");
-        //Buttons
-
         root.addRow(0, creerRedevableBtn, creerLocaleBtn, creerAutresBtn, saveTaxeBtn, searchByCretiriaBtn);
+        //Lable
 
+        //Vbox
+        VBox vbox = new VBox(10);
+        vbox.getChildren().addAll(userLabel,root);
         //implementation
         creerRedevableBtn.setOnAction(e -> {
             s1.close();
@@ -91,25 +98,30 @@ public final class MenuChoices extends Application implements EventHandler<Actio
             }
         });
 
-        primaryStage.setScene(new Scene(root));
+        primaryStage.setScene(new Scene(vbox));
         primaryStage.setTitle("Choix");
         primaryStage.show();
 
         s1 = primaryStage;
     }
-
+    //Buttons
     Button creerRedevableBtn;
     Button creerLocaleBtn;
     Button creerAutresBtn;
     Button saveTaxeBtn;
     Button searchByCretiriaBtn;
+    //Labels
+    Label userLabel;
 
     private void initComponents() {
+        //Buttons
         creerRedevableBtn = new Button("Creer redevable");
         creerLocaleBtn = new Button("Creer locale");
         creerAutresBtn = new Button("Creer autres");
         saveTaxeBtn = new Button("Payer taxe");
         searchByCretiriaBtn = new Button("Recherches par critère");
+        //Labels
+        userLabel = new Label();
     }
 
     @Override
