@@ -7,6 +7,7 @@ import bean.Locale;
 import bean.Quartier;
 import bean.Redevable;
 import bean.Secteur;
+import java.util.Optional;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -15,6 +16,7 @@ import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -92,7 +94,7 @@ public final class CreerLocale extends Application implements EventHandler<Actio
         //impement save button
         findBtn.setOnAction(event -> {
             Locale l = ls.findByCode(codeLocaleField.getText());
-            System.out.println(l.getCode());
+            //System.out.println(l.getCode());
             if (l == null || codeLocaleField.getText().equals("")) {
                 alertUtil.showAlert(Alert.AlertType.ERROR, "ERROR", "Locale ayant comme code '" + codeLocaleField.getText() + "' n'existe pas");
             } else {
@@ -113,9 +115,16 @@ public final class CreerLocale extends Application implements EventHandler<Actio
             if (l == null || codeLocaleField.getText().equals("")) {
                 alertUtil.showAlert(Alert.AlertType.ERROR, "ERROR", "Locale ayant comme code '" + codeLocaleField.getText() + "' n'existe pas");
             } else {
-                ls.remove(l);
-                refreshLocaleTextFields();
-                alertUtil.showAlert(Alert.AlertType.INFORMATION, "INFO", "Locale a été supprimé");
+                Alert dialogC = new Alert(Alert.AlertType.CONFIRMATION, "Confirmation");
+                dialogC.setHeaderText("Voulez- vous vraiment supprimer ce locale");
+                Optional<ButtonType> reponse = dialogC.showAndWait();
+                if (reponse.get() == ButtonType.OK) {
+                    ls.remove(l);
+                    refreshLocaleTextFields();
+                    alertUtil.showAlert(Alert.AlertType.INFORMATION, "INFO", "Locale supprimé");
+                } else {
+
+                }
             }
         });
 
@@ -142,7 +151,7 @@ public final class CreerLocale extends Application implements EventHandler<Actio
         saveBtn.setOnAction(e -> {
             Locale locale = ls.find(codeLocaleField.getText());
             Redevable r = rs.find(redevableField.getText());
-            
+
             if (codeLocaleField.getText().equals("") || redevableField.getText().equals("") || dernierTrimField.getText().equals("")) {
                 alertUtil.showAlert(Alert.AlertType.ERROR, "ERROR", "Merci de remplir toutes les champs");
             } else if (locale != null) {
@@ -152,7 +161,7 @@ public final class CreerLocale extends Application implements EventHandler<Actio
             } else if (categorieComboBox.getSelectionModel().getSelectedIndex() < 0 || secteurComboBox.getSelectionModel().getSelectedIndex() < 0 || categorieComboBox.getSelectionModel().getSelectedIndex() < 0) {
                 alertUtil.showAlert(Alert.AlertType.ERROR, "ERROR", "Merci de marquer tous les choix");
             } else {
-                ls.createLocale(codeLocaleField.getText(), new Integer(dernierTrimField.getText()), new Integer(dernierAnneeField.getText()), quartiers.get(secteurComboBox.getSelectionModel().getSelectedIndex()-1), r, categories.get(categorieComboBox.getSelectionModel().getSelectedIndex()));
+                ls.createLocale(codeLocaleField.getText(), new Integer(dernierTrimField.getText()), new Integer(dernierAnneeField.getText()), quartiers.get(secteurComboBox.getSelectionModel().getSelectedIndex() - 1), r, categories.get(categorieComboBox.getSelectionModel().getSelectedIndex()));
                 alertUtil.showAlert(Alert.AlertType.INFORMATION, "INFO", "Locale crée avec succés");
             }
         });

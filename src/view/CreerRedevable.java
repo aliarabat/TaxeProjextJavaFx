@@ -8,14 +8,17 @@ package view;
 import util.LocalDateStringConverter;
 import bean.Redevable;
 import java.time.LocalDate;
+import java.util.Optional;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -129,8 +132,16 @@ public final class CreerRedevable extends Application implements EventHandler<Ac
             if (r == null) {
                 alertUtil.showAlert(AlertType.ERROR, "ERROR", "Redevable ayant comme cin '" + cinField.getText() + "' n'existe pas");
             } else {
-                rs.remove(r);
-                alertUtil.showAlert(AlertType.INFORMATION, "Infos", "Redevable a été supprimé");
+                Alert dialogC = new Alert(Alert.AlertType.CONFIRMATION, "Confirmation");
+                dialogC.setHeaderText("Voulez- vous vraiment supprimer ce redevable");
+                Optional<ButtonType> reponse = dialogC.showAndWait();
+                if (reponse.get() == ButtonType.OK) {
+                    rs.remove(r);
+                    alertUtil.showAlert(AlertType.INFORMATION, "Infos", "Redevable a été supprimé");
+                } else {
+
+                }
+
             }
         });
 

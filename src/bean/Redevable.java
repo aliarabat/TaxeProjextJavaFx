@@ -7,6 +7,7 @@ package bean;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
@@ -28,7 +29,7 @@ public class Redevable implements Serializable {
     private String email;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date naissance;
-    @OneToOne(mappedBy = "redevable")
+    @OneToOne(mappedBy = "redevable", cascade=CascadeType.ALL)
     private Locale locale;
 
     public Redevable() {

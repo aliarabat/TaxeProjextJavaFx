@@ -7,6 +7,7 @@ package bean;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -27,11 +28,11 @@ public class Locale implements Serializable {
     private int dernierAnne;
     @ManyToOne
     private Quartier quartier;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Redevable redevable;
     @ManyToOne
     private Categorie categorie;
-    @OneToMany(mappedBy = "locale")
+    @OneToMany(mappedBy = "locale", cascade = CascadeType.ALL)
     private List<Taxe> taxes;
 
     public Locale() {
